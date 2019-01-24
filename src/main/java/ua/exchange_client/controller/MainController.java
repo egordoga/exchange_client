@@ -58,8 +58,7 @@ public class MainController {
         own = false;
         orderNew = order;
 
-        ParameterizedTypeReference<Resources<Resource<Order>>> res = new ParameterizedTypeReference<Resources<Resource<Order>>>() {
-        };
+        ParameterizedTypeReference<Resources<Resource<Order>>> res = new ParameterizedTypeReference<Resources<Resource<Order>>>() {};
         ResponseEntity<Resources<Resource<Order>>> entity = template.exchange(URI.create(uri), HttpMethod.GET,
                 new HttpEntity<Void>(getHeaders()), res);
         resources = entity.getBody().getContent();
@@ -84,8 +83,7 @@ public class MainController {
     public String viewOwnOrders() {
         String uri = "http://localhost:8080/orders/own";
         own = true;
-        ParameterizedTypeReference<Resources<Resource<Order>>> res = new ParameterizedTypeReference<Resources<Resource<Order>>>() {
-        };
+        ParameterizedTypeReference<Resources<Resource<Order>>> res = new ParameterizedTypeReference<Resources<Resource<Order>>>() {};
         ResponseEntity<Resources<Resource<Order>>> entity = template.exchange(URI.create(uri), HttpMethod.GET, new HttpEntity<Void>(getHeaders()), res);
         resources = entity.getBody().getContent();
         ownResources = entity.getBody().getContent();
