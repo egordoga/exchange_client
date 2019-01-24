@@ -84,7 +84,8 @@ public class MainController {
         String uri = "http://localhost:8080/orders/own";
         own = true;
         ParameterizedTypeReference<Resources<Resource<Order>>> res = new ParameterizedTypeReference<Resources<Resource<Order>>>() {};
-        ResponseEntity<Resources<Resource<Order>>> entity = template.exchange(URI.create(uri), HttpMethod.GET, new HttpEntity<Void>(getHeaders()), res);
+        ResponseEntity<Resources<Resource<Order>>> entity = template.exchange(URI.create(uri), HttpMethod.GET,
+                new HttpEntity<Void>(getHeaders()), res);
         resources = entity.getBody().getContent();
         ownResources = entity.getBody().getContent();
         return "redirect:/orders";
