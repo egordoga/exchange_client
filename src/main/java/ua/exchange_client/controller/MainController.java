@@ -31,8 +31,12 @@ public class MainController {
     private Collection<Resource<Order>> ownResources;
     private String message;
 
+    private final RestTemplate template;
+
     @Autowired
-    private RestTemplate template;
+    public MainController(RestTemplate template) {
+        this.template = template;
+    }
 
 
     @GetMapping("/message")
@@ -58,7 +62,8 @@ public class MainController {
         own = false;
         orderNew = order;
 
-        ParameterizedTypeReference<Resources<Resource<Order>>> res = new ParameterizedTypeReference<Resources<Resource<Order>>>() {};
+        ParameterizedTypeReference<Resources<Resource<Order>>> res = new ParameterizedTypeReference<Resources<Resource<Order>>>() {
+        };
         ResponseEntity<Resources<Resource<Order>>> entity = template.exchange(URI.create(uri), HttpMethod.GET,
                 new HttpEntity<Void>(getHeaders()), res);
         resources = entity.getBody().getContent();
@@ -83,7 +88,8 @@ public class MainController {
     public String viewOwnOrders() {
         String uri = "http://localhost:8080/orders/own";
         own = true;
-        ParameterizedTypeReference<Resources<Resource<Order>>> res = new ParameterizedTypeReference<Resources<Resource<Order>>>() {};
+        ParameterizedTypeReference<Resources<Resource<Order>>> res = new ParameterizedTypeReference<Resources<Resource<Order>>>() {
+        };
         ResponseEntity<Resources<Resource<Order>>> entity = template.exchange(URI.create(uri), HttpMethod.GET,
                 new HttpEntity<Void>(getHeaders()), res);
         resources = entity.getBody().getContent();
@@ -115,7 +121,6 @@ public class MainController {
         } else {
             message = "Something wrong";
         }
-
         return "redirect:/message";
     }
 
@@ -128,7 +133,6 @@ public class MainController {
                 break;
             }
         }
-
         model.addAttribute("orderRes", order.getContent());
         model.addAttribute("idd", order.getContent().getIdd());
         return "update";
